@@ -1,9 +1,9 @@
-import Home from "./pages/home";
+import { ChessApp } from "./components/ChessApp";
 
 function App() {
   return (
     <div className="w-full min-h-screen">
-      <Home />
+      <ChessApp />
     </div>
   );
 }

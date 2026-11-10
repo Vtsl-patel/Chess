@@ -1,1 +1,25 @@
 @import "tailwindcss";
+
+body {
+  margin: 0;
+  background-color: #1f1e1b;
+  color: #f1f1f1;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  user-select: none;
+  overflow-x: hidden;
+}
+
+/* Custom sleek scrollbar for Move History */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: #1f1e1b;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: #3c3935;
+  border-radius: 3px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: #504c47;
+}
