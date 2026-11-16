@@ -37,7 +37,7 @@ flowchart TD
 
     Dispatch_Move --> Reducer_Move["gameReducer: MAKE_MOVE"]
     Dispatch_Promo --> Reducer_Move
-    Reducer_Move --> Call_Execute["chessLogic: executeMove(...)"]
+    Reducer_Move --> Call_Execute["engine: executeMove(...)"]
     Call_Execute --> Update_State["Update Board, Move History, Captured Pieces, Clocks"]
     Update_State --> ReRender["React Re-Renders Board, Timers, History"]
 ```

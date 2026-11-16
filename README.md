@@ -1,4 +1,4 @@
-# ♟️ Chess.com Clone — Local Two-Player Chess
+# ♟️ Chessify — Local Two-Player Chess
 
 A modern, responsive, and fully featured local two-player chess web application built with **React 19**, **TypeScript**, **Vite**, and **Tailwind CSS**. Designed to replicate the authentic look, feel, and competitive mechanics of [Chess.com](https://www.chess.com).
 
@@ -137,28 +137,46 @@ Chess/
 │   │       └── white/        # PNG piece assets (pawn, knight, bishop, rook, queen, king)
 │   └── favicon.svg
 ├── src/
-│   ├── components/
-│   │   ├── Board.tsx         # 8x8 grid container, drag-and-drop & square mapping
-│   │   ├── Square.tsx        # Square rendering, highlights, coordinates, indicators
-│   │   ├── Piece.tsx         # Crisp draggable piece rendering
-│   │   ├── MoveHistory.tsx   # SAN table & history navigation toolbar (|< < > >|)
-│   │   ├── PromotionDialog.tsx # Pawn promotion picker modal
-│   │   └── ChessApp.tsx      # Main layout, timer intervals, keyboards, player strips
+│   ├── components/           # Presentation layer (Single Responsibility Principle)
+│   │   ├── ActionControls.tsx     # New Game, Undo, Flip buttons & shortcut key hints
+│   │   ├── Board.tsx              # 8x8 grid container, drag-and-drop & square mapping
+│   │   ├── ChessApp.tsx           # High-level coordinator composing components & hooks
+│   │   ├── GameOverBanner.tsx     # Game-over alert banner with "Play Again" button
+│   │   ├── GameStatusCard.tsx     # Sidebar game status card & turn indicator
+│   │   ├── Header.tsx             # Top navbar with logo, title, and live match badge
+│   │   ├── MoveHistory.tsx        # SAN table & history navigation toolbar (|< < > >|)
+│   │   ├── Piece.tsx              # Crisp draggable piece rendering
+│   │   ├── PlayerBar.tsx          # Player console (avatar, rating, captured pieces, clock)
+│   │   ├── PromotionDialog.tsx    # Pawn promotion picker modal
+│   │   ├── Square.tsx             # Square rendering, highlights, coordinates, indicators
+│   │   └── TimeControlSelector.tsx # Time control preset pills (10m, 5m, 3m, 1m, ∞)
+│   ├── engine/               # Pure chess engine (Decomposed by Single Responsibility)
+│   │   ├── board.ts               # Board setup, cloning, cell lookup, King location
+│   │   ├── coordinates.ts         # Coordinate math, index conversions, position equality
+│   │   ├── executeMove.ts         # Turn orchestration (application, SAN, terminal status)
+│   │   ├── gameStatus.ts          # Terminal detection (checkmate, stalemate, draw)
+│   │   ├── index.ts               # Unified engine facade re-export
+│   │   ├── material.ts            # Material counting & advantage calculation
+│   │   ├── moveApplication.ts     # Physical board simulation (castling, en passant, promotion)
+│   │   ├── moveGeneration.ts      # Pseudo-legal & strictly legal move calculations
+│   │   ├── san.ts                 # FIDE Standard Algebraic Notation with disambiguation
+│   │   └── threats.ts             # Threat vectors & King check detection
+│   ├── hooks/                # Dedicated single-purpose custom hooks
+│   │   ├── useChessShortcuts.ts   # Keyboard shortcut listener (U, F, R, arrows, Esc)
+│   │   └── useChessTimer.ts       # Active player clock interval countdown
 │   ├── store/
-│   │   └── game-state.ts     # useReducer store, actions, history replay, clock logic
+│   │   └── game-state.ts          # useReducer store, actions, history replay, clock logic
 │   ├── types/
-│   │   └── chess.ts          # Core domain types (Board, Piece, Move, GameState, etc.)
+│   │   └── chess.ts               # Core domain types (Board, Piece, Move, GameState, etc.)
 │   ├── utils/
-│   │   ├── chessLogic.ts     # Pure chess engine: move generator, check detection, SAN
-│   │   └── constants/
-│   │       └── board.ts      # Starting layout and coordinate helpers
-│   ├── App.tsx               # App root
-│   ├── index.css             # Tailwind v4 configuration and custom scrollbars
-│   └── main.tsx              # React DOM bootstrap
-├── index.html                # HTML entry point with metadata
-├── package.json              # Project dependencies and npm scripts
-├── tsconfig.json             # TypeScript configuration
-└── vite.config.ts            # Vite & Tailwind CSS plugins
+│   │   └── chessLogic.ts          # Backward-compatible facade re-exporting engine/
+│   ├── App.tsx                    # App root
+│   ├── index.css                  # Tailwind v4 configuration and custom scrollbars
+│   └── main.tsx                   # React DOM bootstrap
+├── index.html                     # HTML entry point with metadata
+├── package.json                   # Project dependencies and npm scripts
+├── tsconfig.json                  # TypeScript configuration
+└── vite.config.ts                 # Vite & Tailwind CSS plugins
 ```
 
 ---
